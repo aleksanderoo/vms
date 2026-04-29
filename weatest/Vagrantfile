@@ -24,8 +24,12 @@ Vagrant.configure("2") do |config|
     vw.gui    = true
   end
 
-  # Switch to reliable apt mirror before anything else
+  # Fix DNS and apt mirror before anything else
   config.vm.provision "shell", inline: <<-SHELL
+    # Hardcode reliable DNS — libvirt dnsmasq + Google fallback
+    chattr -i /etc/resolv.conf 2>/dev/null || true
+    rm -f /etc/resolv.conf
+    printf 'nameserver 192.168.122.1\nnameserver 8.8.8.8\n' > /etc/resolv.conf
     cat > /etc/apt/sources.list <<'EOF'
 deb http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse
 deb http://archive.ubuntu.com/ubuntu jammy-updates main restricted universe multiverse
