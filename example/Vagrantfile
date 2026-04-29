@@ -1,0 +1,30 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2204"
+
+  config.vm.hostname = "example"
+
+  # Network — uncomment to expose a port to the host
+  # config.vm.network "forwarded_port", guest: 8080, host: 8080
+
+  # Provider: Linux (libvirt) — default
+  config.vm.provider :libvirt do |lv|
+    lv.memory = 4096
+    lv.cpus   = 2
+  end
+
+  # Provider: macOS (VMware Fusion / Workstation Pro)
+  # Switch to this on Mac by running: VAGRANT_DEFAULT_PROVIDER=vmware_desktop vagrant up
+  config.vm.provider :vmware_desktop do |vw|
+    vw.memory = 4096
+    vw.cpus   = 2
+    vw.gui    = false
+  end
+
+  # Shared provisioner (runs once on first `vagrant up`)
+  config.vm.provision "shell", path: "../provision/base.sh"
+
+  # VM-specific provisioner
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "Add example-specific setup here"
+  SHELL
+end
