@@ -12,19 +12,21 @@ vms/
     └── Vagrantfile
 ```
 
-To add a new VM, copy the `example/` directory and edit the `Vagrantfile`.
+To add a new VM, copy an existing VM directory and edit the `Vagrantfile`.
 
 ## Prerequisites
 
 ### Linux
 
 ```bash
-sudo dnf install vagrant libvirt libvirt-daemon-qemu qemu-kvm
+sudo dnf install vagrant libvirt libvirt-daemon-qemu qemu-kvm virt-manager
 sudo systemctl enable --now libvirtd
 sudo usermod -aG libvirt $USER
 newgrp libvirt
 vagrant plugin install vagrant-libvirt
 ```
+
+**Viewing the VM desktop**: after `vagrant up`, open `virt-manager`, find the VM in the list, and double-click it. Login with `vagrant` / `vagrant`.
 
 ### macOS (VMware Fusion — free for commercial use since May 2024)
 
