@@ -4,7 +4,8 @@ set -euo pipefail
 # Base provisioner — runs on every VM.
 # Add packages that belong in every machine here.
 
-dnf install -y \
+apt-get update -qq
+apt-get install -y \
     git \
     curl \
     wget \
