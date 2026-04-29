@@ -26,7 +26,10 @@ Vagrant.configure("2") do |config|
 
   # Switch to reliable apt mirror before anything else
   config.vm.provision "shell", inline: <<-SHELL
-    sed -i 's|http://.*ubuntu.com/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+    # Replace any mirror with the official Ubuntu archive
+    sed -i 's|https\?://[^ ]*/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+    find /etc/apt/sources.list.d/ -name '*.list' -exec \
+      sed -i 's|https\?://[^ ]*/ubuntu|http://archive.ubuntu.com/ubuntu|g' {} \;
   SHELL
 
   # Shared base provisioner
