@@ -34,4 +34,10 @@ Vagrant.configure("2") do |config|
     echo '/usr/sbin/gdm3' > /etc/X11/default-display-manager
     systemctl set-default graphical.target
   SHELL
+  # wea — add apt repo and install
+  config.vm.provision "shell", inline: <<-SHELL
+    export DEBIAN_FRONTEND=noninteractive
+    bash <(curl -fsSL https://oss-release-files.oss-accelerate.aliyuncs.com/wea/repos/apt/setup_prod_repo_apt.sh)
+    apt-get install -y wea
+  SHELL
 end
