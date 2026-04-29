@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     export DEBIAN_FRONTEND=noninteractive
     apt-get install -y xfce4 xfce4-goodies lightdm
-    systemctl enable lightdm
+    echo '/usr/sbin/lightdm' > /etc/X11/default-display-manager
     systemctl set-default graphical.target
   SHELL
 end
